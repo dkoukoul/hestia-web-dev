@@ -1,55 +1,115 @@
-<script type="text/javascript">
-function success(data) {
-	var text = "";
-	if (data.Result == "ERROR") {
-		text = "Error: " + data.Message;
-	} else {
-		text = "Holiday times set";
-	}
+<?php
+if (!empty($_GET)) {
+  $tz = $_GET['timezone']; 
+  $place = "";
+  switch ($tz)
+  {
+  case -12:
+    $place = "Pacific/Kwajalein";
+    break;
+  case -11:
+    $place = "Pacific/Samoa";
+    break;
+  case -10:
+    $place = "Pacific/Honolulu";
+    break;
+  case -9:
+    $place = "America/Juneau";
+    break;    
+  case -8:
+    $place = "America/Los_Angeles";
+    break;
+  case -7:
+    $place = "America/Denver";
+    break;
+  case -6:
+    $place = "America/Mexico_City";
+    break;
+  case -5:
+    $place = "America/Bogota";
+    break;
+  case -4:
+    $place = "America/Caracas";
+    break;
+  case -3.5:
+    $place = "America/St_Johns";
+    break;
+  case -3:
+    $place = "America/Sao_Paulo";
+    break;
+  case -2:
+    $place = "America/Barbados";
+    break;
+  case -1:
+    $place = "Atlantic/Azores";
+    break;
+  case 0:
+    $place = "Europe/London";
+    break;
+  case 1:
+    $place = "Europe/Berlin";
+    break;            
+  case 2:
+    $place = "Europe/Athens";
+    break;
+  case 3:
+    $place = "Europe/Moscow";
+    break;
+  case 3.5:
+    $place = "Asia/Tehran";
+    break;    
+  case 4:
+    $place = "Asia/Tbilisi";
+    break;
+  case 4.5:
+    $place = "Asia/Kabul";
+    break;    
+  case 5:
+    $place = "Asia/Yekaterinburg";
+    break;
+  case 5.5:
+    $place = "Asia/Calcutta";
+    break;    
+  case 6:
+    $place = "Asia/Dhaka";
+    break;
+  case 7:
+    $place = "Asia/Jakarta";
+    break;
+  case 8:
+    $place = "Asia/Hong_Kong";
+    break;
+  case 9:
+    $place = "Asia/Tokyo";
+    break;
+  case 9.5:
+    $place = "Australia/Adelaide";
+    break;    
+  case 10:
+    $place = "Australia/Sydney";
+    break;            
+  case 11:
+    $place = "Asia/Magadan";
+    break;          
+  case 12:
+    $place = "Pacific/Fiji";
+    break;
 
-	var $dialog = $('<div></div>')
-	.html(text)
-	.dialog({
-		autoOpen: false,
-		title: 'Setting holiday times',
-		close: function(ev, ui) { $(this).html(text); }
-	});
-
-	$dialog.dialog('open');
-
-	$.getJSON("/api/configuration/holidaytimes/", function(json) {
-		if(json.Result == "OK") {
-			$('#timeString').html(json.Message);
-		}
-	});
-};
-
-$(document).ready(function() { 
-	$( "#submit" ).button(); //style button
-	
-	//Create datetimepickers
-	$('#holidayFrom').datetimepicker();
-	$('#holidayTo').datetimepicker(); 
-
-	//Submit click functionality
-	$('#submit').click(function() {
-		$.ajax({
-			  type: 'POST',
-			  url: "/api/configuration/holiday/",
-			  data: {"from": $('#holidayFrom').datetimepicker('getDate'), 
-				  "to": $('#holidayTo').datetimepicker('getDate')},
-			  success: success,
-			  dataType: 'json',
-			});
-	});
-
-	//Accordian
-	$(function() {
-		$( "#holidayTimes" ).accordion({ collapsible: true, active: false });
-	});
-} );
-
-</script>
+  }
+  //ToDo
+  //better notification
+  //select current timezone in select
+  //remove _GET params
+  //chek rest DST and non DST timezones?
+  
+  //NOTE in order for the sudo command below to run you need to add
+  //this: www-data ALL=(ALL) NOPASSWD: ALL
+  //to /etc/sudoers
+  //not sure if it is the safest think to do :S
+  exec('sudo ln -sf /usr/share/zoneinfo/'.$place.' /etc/localtime');
+  print("Timezone set for: " . $place);
+}  
+?>
 
 <div id="settings">
 <hr>
