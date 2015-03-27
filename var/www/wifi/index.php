@@ -322,7 +322,7 @@ update_config=1
       $signal = $arrNetwork[2] . " dBm";
       $security = $arrNetwork[3];
       $ssid = $arrNetwork[4];
-      echo '<button type="button" class="btn btn-default" value="Connect to This network" name="Connect to This network" onClick="AddScanned(\''.$ssid.'\')"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span>&nbsp;&nbsp;Connect to this network</button> ' . $ssid . " on channel " . $channel . " with " . $signal . "(".ConvertToSecurity($security)." Security)<br />";
+      echo '<button type="button" class="btn btn-default" value="Connect to This network" name="Connect to This network" onClick="AddScanned(\''.$ssid.'\')"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span>&nbsp;&nbsp;Connect to this network</button>&nbsp;&nbsp;&nbsp;' . $ssid . " on channel " . $channel . " with " . $signal . "(".ConvertToSecurity($security)." Security)<br />";
     }
   }
 
