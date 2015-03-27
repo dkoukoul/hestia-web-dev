@@ -181,23 +181,25 @@ dhcp-range='.$_POST['RangeStart'].','.$_POST['RangeEnd'].',255.255.255.0,'.$_POS
         echo 'Interface already up';
       }
     }
-  echo '<div class="infobox">
-<form action="/?page=wlan0_info" method="POST">
-
-<button type="submit" class="btn btn-default btn-lg" onclick="document.location.reload(true)">
-  <span class="glyphicon glyphicon-refresh" aria-hidden="true" onclick="submit()"></span> Refresh 
-</button>
-
-<button type="submit" class="btn btn-default btn-lg" value="ifdown wlan0" name="ifdown_wlan0">
-  <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true" onclick="submit()"></span> ifdown_wlan0 
-</button>
-
-<button type="submit" class="btn btn-default btn-lg" value="ifup wlan0" name="ifup_wlan0">
-  <span class="glyphicon glyphicon-triangle-top" aria-hidden="true" onclick="submit()"></span> ifup_wlan0 
-</button>
-
-</form>
-<div class="panel panel-default">
+  echo '<div class="infobox">';
+	if($simpleui == 0){
+		echo '<form action="/?page=wlan0_info" method="POST">
+		
+		<button type="submit" class="btn btn-default btn-lg" onclick="document.location.reload(true)">
+		  <span class="glyphicon glyphicon-refresh" aria-hidden="true" onclick="submit()"></span> Refresh 
+		</button>
+		
+		<button type="submit" class="btn btn-default btn-lg" value="ifdown wlan0" name="ifdown_wlan0">
+		  <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true" onclick="submit()"></span> ifdown_wlan0 
+		</button>
+		
+		<button type="submit" class="btn btn-default btn-lg" value="ifup wlan0" name="ifup_wlan0">
+		  <span class="glyphicon glyphicon-triangle-top" aria-hidden="true" onclick="submit()"></span> ifup_wlan0 
+		</button>
+		
+		</form>';
+	}
+echo '<div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Interface Information</h3>
   </div>
@@ -301,8 +303,15 @@ update_config=1
     exec("echo '$config' > /tmp/wifidata",$return);
     system('sudo cp /tmp/wifidata /etc/wpa_supplicant/wpa_supplicant.conf',$returnval);
     if($returnval == 0) {
-      echo "Wifi Settings Updated Successfully";
+      echo "WiFi Settings Updated Successfully!";
       exec("sudo ifdown wlan0; sudo ifup wlan0",$return);
+      exec("ifconfig wlan0",$return);
+      $strWlan0 = implode(" ",$return);
+      $strWlan0 = preg_replace("/\s\s+/", " ", $strWlan0);
+      preg_match("/inet addr:([0-9.]+)/i",$strWlan0,$result);
+      $strIPAddress = $result[1];
+      
+      echo "<BR>You can now login to your HestiaPi.<BR>Connect to your WiFi and click this link: <a href=\"http://".$strIPAddress."\">http://" . $strIPAddress . "</a>";
     } else {
       echo "Wifi settings failed to be updated";
     }
@@ -322,7 +331,7 @@ update_config=1
       $signal = $arrNetwork[2] . " dBm";
       $security = $arrNetwork[3];
       $ssid = $arrNetwork[4];
-      echo '<button type="button" class="btn btn-default" value="Connect to This network" name="Connect to This network" onClick="AddScanned(\''.$ssid.'\')"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span>&nbsp;&nbsp;Connect to this network</button>&nbsp;&nbsp;&nbsp;' . $ssid . " on channel " . $channel . " with " . $signal . "(".ConvertToSecurity($security)." Security)<br />";
+      echo '<br><button type="button" class="btn btn-default" value="Connect to This network" name="Connect to This network" onClick="AddScanned(\''.$ssid.'\')"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span>&nbsp;&nbsp;Connect to this network</button>&nbsp;&nbsp;&nbsp;' . $ssid . " on channel " . $channel . " with " . $signal . "(".ConvertToSecurity($security)." Security)<br />";
     }
   }
 
