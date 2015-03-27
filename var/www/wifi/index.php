@@ -26,7 +26,7 @@ echo '<html>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">HestiaPi WiFi Helper</a>
+            <a class="navbar-brand" href="/">HestiaPi WiFi Helper</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -130,6 +130,7 @@ dhcp-range='.$_POST['RangeStart'].','.$_POST['RangeEnd'].',255.255.255.0,'.$_POS
   break;
 
   case "wlan0_info":
+  default:
     exec('ifconfig wlan0',$return);
     exec('iwconfig wlan0',$return);
     $strWlan0 = implode(" ",$return);
