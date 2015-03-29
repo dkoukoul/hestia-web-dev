@@ -175,9 +175,9 @@ $(document).ready(function() {
               <option value="-2.0" <?php if ($tz[0]=="GMT-2") echo "selected"?>>(GMT -2:00) Mid-Atlantic</option>
               <option value="-1.0" <?php if ($tz[0]=="GMT-1") echo "selected"?>>(GMT -1:00) Azores, Cape Verde Islands</option>
               <option value="0.0" <?php if ($tz[0]=="GMT") echo "selected"?>>(GMT) Western Europe Time, London, Lisbon</option>
-              <option value="1.0" <?php if ($tz[0]=="GMT+1") echo "selected"?>>(GMT +1:00) Brussels, Copenhagen, Madrid, Paris</option>
+              <option value="1.0" <?php if ($tz[0]=="GMT+1" || $tz[0]=="BST") echo "selected"?>>(GMT +1:00) Brussels, Copenhagen, Madrid, Paris</option>
               <option value="2.0" <?php if ($tz[0]=="GMT+2" || $tz[0]=="EET") echo "selected"?>>(GMT +2:00) Athens, Cairo, South Africa</option>
-              <option value="3.0" <?php if ($tz[0]=="GMT+3") echo "selected"?>>(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+              <option value="3.0" <?php if ($tz[0]=="GMT+3" || $tz[0]=="EEST") echo "selected"?>>(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
               <option value="4.0" <?php if ($tz[0]=="GMT+4") echo "selected"?>>(GMT +4:00) Abu Dhabi, Muscat, Tbilisi</option>
               <option value="5.0" <?php if ($tz[0]=="GMT+5") echo "selected"?>>(GMT +5:00) Ekaterinburg, Islamabad</option>
               <option value="6.0" <?php if ($tz[0]=="GMT+6") echo "selected"?>>(GMT +6:00) Almaty, Dhaka, Colombo</option>
